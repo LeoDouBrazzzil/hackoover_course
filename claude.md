@@ -106,7 +106,7 @@ Le projet utilise des alias de chemins pour faciliter les imports :
 @utils/*     → src/utils/*
 @config/*    → src/config/*
 @store/*     → src/store/*
-@assets/*    → src/assets/*
+@assets/*    → src/assets/**/
 ```
 
 ## API Endpoints
@@ -130,6 +130,21 @@ Le projet utilise des alias de chemins pour faciliter les imports :
 - `GET /user-progress/by-course-and-user` - Progression par cours et utilisateur
 - `GET /user-progress/by-user` - Progression par utilisateur
 
+### Admin (🔒 Requiert ROLE_ADMIN)
+#### Courses
+- `GET /admin/courses` - Liste tous les cours (admin)
+- `POST /admin/courses` - Créer un cours
+- `PUT /admin/courses/:id` - Modifier un cours
+- `DELETE /admin/courses/:id` - Supprimer un cours
+- `POST /admin/courses/:id/image` - Upload image du cours
+
+#### Lessons
+- `GET /admin/lessons/by-course/:courseId` - Leçons par cours (admin)
+- `POST /admin/lessons` - Créer une leçon
+- `PUT /admin/lessons/:id` - Modifier une leçon
+- `DELETE /admin/lessons/:id` - Supprimer une leçon
+- `PUT /admin/lessons/reorder` - Réordonner les leçons
+
 ## Configuration
 
 ### Backend (application.properties)
@@ -148,8 +163,8 @@ Le projet utilise des alias de chemins pour faciliter les imports :
 
 ```typescript
 State = {
-  user: ProgressState      // Progression utilisateur
-  lesson: LessonState      // État des leçons
+  user: ProgressState,      // Progression utilisateur
+  lesson: LessonState,     // État des leçons
   course: CourseState      // État des cours
 }
 ```

@@ -1,16 +1,16 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import { BookOpen, LayoutDashboard, LogIn } from "lucide-react";
+import { BookOpen, LayoutDashboard, LogIn, Settings } from "lucide-react";
 import * as S from "./NavBar.styles";
 import logoBlackSmall from "assets/logos/logoBlackSmall.png";
+import {useAuth} from "utils/useAuth.ts";
 
 const NavBar = () => {
     const navigate  = useNavigate();
     const location  = useLocation();
     const [open, setOpen] = useState(false);
 
-    const token          = localStorage.getItem("token");
-    const isAuthenticated = !!token;
+    const { isAuthenticated, isAdmin } = useAuth();
 
     // Ferme le menu lors d'un changement de route
     useEffect(() => {
@@ -40,6 +40,7 @@ const NavBar = () => {
                     <S.DesktopLinks>
                         <S.NavLink to="/courses">Cours</S.NavLink>
                         <S.NavLink to="/dashboard">Dashboard</S.NavLink>
+                        {isAdmin && <S.NavLink to="/admin/courses">⚙️ Admin</S.NavLink>}
                     </S.DesktopLinks>
                 </S.NavLeft>
 
@@ -84,6 +85,11 @@ const NavBar = () => {
                 <S.MobileNavLink to="/dashboard">
                     <LayoutDashboard /> Dashboard
                 </S.MobileNavLink>
+                {isAdmin && (
+                    <S.MobileNavLink to="/admin/courses">
+                        <Settings /> Admin
+                    </S.MobileNavLink>
+                )}
 
                 {!isAuthenticated && (
                     <>

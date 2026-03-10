@@ -91,7 +91,7 @@ public class AuthServiceImpl implements AuthService {
         }
 
         // Générer le token JWT
-        String token = JwtUtil.generateToken(savedUser.getEmail());
+        String token = JwtUtil.generateToken(savedUser.getEmail(), savedUser.getRoles());
 
         return new AuthResponse(
                 token,
@@ -131,7 +131,7 @@ public class AuthServiceImpl implements AuthService {
         }
 
         // Générer le token JWT
-        String token = JwtUtil.generateToken(user.getEmail());
+        String token = JwtUtil.generateToken(user.getEmail(), user.getRoles());
 
         return new AuthResponse(
                 token,

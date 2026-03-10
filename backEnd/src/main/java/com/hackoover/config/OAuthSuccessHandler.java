@@ -43,7 +43,7 @@ public class OAuthSuccessHandler implements AuthenticationSuccessHandler {
 
                     });
 
-            String token = JwtUtil.generateToken(user.getEmail());
+            String token = JwtUtil.generateToken(user.getEmail(), user.getRoles());
 
             response.sendRedirect("http://localhost:3000/oauth-success?token="+token);
 

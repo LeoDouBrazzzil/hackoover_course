@@ -130,6 +130,50 @@ export interface AuthResponse {
     message?: string;
 }
 
+// ------------------------------------
+// ADMIN TYPES
+// ------------------------------------
+
+export interface CourseRequest {
+    title: string;
+    description: string;
+    imageUrl?: string;
+    difficulty: string;
+    duration?: number;
+    featured?: boolean;
+    category: string;
+}
+
+export interface LessonRequest {
+    courseId: string;
+    title: string;
+    content: string;
+    orderIndex: number;
+    duration?: number;
+    videoUrl?: string;
+}
+
+export interface CourseResponse {
+    id: string;
+    title: string;
+    description: string;
+    imageUrl?: string;
+    difficulty: string;
+    duration?: number;
+    featured: boolean;
+    category: string;
+}
+
+export interface LessonResponse {
+    id: string;
+    courseId: string;
+    title: string;
+    content: string;
+    orderIndex: number;
+    duration?: number;
+    videoUrl?: string;
+}
+
 const api = {
     auth: {
         async register(payload: RegisterRequest): Promise<AuthResponse> {
@@ -256,6 +300,68 @@ const api = {
                 return ws
                     .post(endpoints.userProgress.base, payload)
                     .then((r) => r.data);
+            },
+        },
+    },
+
+    // ------------------------------------
+    // ADMIN API — 🔒 Requiert ROLE_ADMIN
+    // ------------------------------------
+    admin: {
+        courses: {
+            async getAll(): Promise<CourseResponse[]> {
+                const { data } = await ws.get('/admin/courses');
+                return data;
+            },
+
+            async create(payload: CourseRequest): Promise<CourseResponse> {
+                const { data } = await ws.post('/admin/courses', payload);
+                return data;
+            },
+
+            async update(id: string, payload: CourseRequest): Promise<CourseResponse> {
+                const { data } = await ws.put(`/admin/courses/${id}`, payload);
+                return data;
+            },
+
+            async delete(id: string): Promise<void> {
+                await ws.delete(`/admin/courses/${id}`);
+            },
+
+            async uploadImage(id: string, file: File): Promise<string> {
+                const formData = new FormData();
+                formData.append('file', file);
+                const { data } = await ws.post(`/admin/courses/${id}/image`, formData, {
+                    headers: { 'Content-Type': 'multipart/form-data' }
+                });
+                return data;
+            },
+        },
+
+        lessons: {
+            async getByCourse(courseId: string): Promise<LessonResponse[]> {
+                const { data } = await ws.get(`/admin/lessons/by-course/${courseId}`);
+                return data;
+            },
+
+            async create(payload: LessonRequest): Promise<LessonResponse> {
+                const { data } = await ws.post('/admin/lessons', payload);
+                return data;
+            },
+
+            async update(id: string, payload: LessonRequest): Promise<LessonResponse> {
+                const { data } = await ws.put(`/admin/lessons/${id}`, payload);
+                return data;
+            },
+
+            async delete(id: string): Promise<void> {
+                await ws.delete(`/admin/lessons/${id}`);
+            },
+
+            async reorder(courseId: string, lessonIds: string[]): Promise<void> {
+                await ws.put('/admin/lessons/reorder', lessonIds, {
+                    params: { courseId }
+                });
             },
         },
     },

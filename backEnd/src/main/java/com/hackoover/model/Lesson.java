@@ -45,4 +45,6 @@ public class Lesson {
     public void setDuration_minutes(Integer d){this.duration_minutes=d;}
     public String getVideo_url(){return video_url;}
     public void setVideo_url(String v){this.video_url=v;}
+    public Course getCourse(){return course;}
+    public void setCourse(Course c){this.course=c;}
 }

@@ -8,6 +8,7 @@ import io.jsonwebtoken.security.Keys;
 import javax.crypto.SecretKey;
 import java.nio.charset.StandardCharsets;
 import java.util.Date;
+import java.util.Set;
 
 /**
  * Utilitaire simple pour gérer les JWT
@@ -26,9 +27,10 @@ public class JwtUtil {
     /**
      * Génère un token JWT pour un email
      */
-    public static String generateToken(String email) {
+    public static String generateToken(String email, Set<String> roles) {
         return Jwts.builder()
                 .setSubject(email)
+                .claim("roles", roles)
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION))
                 .signWith(KEY, SignatureAlgorithm.HS256)

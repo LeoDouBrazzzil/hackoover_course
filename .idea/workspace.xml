@@ -4,14 +4,37 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cede6812-2c83-4c6f-8ab7-c5456ecb06f7" name="Changes" comment="" />
+    <list default="true" id="cede6812-2c83-4c6f-8ab7-c5456ecb06f7" name="Changes" comment="création et améiloration de la gestion des cours">
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backEnd/src/main/java/com/hackoover/config/JwtUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/backEnd/src/main/java/com/hackoover/config/JwtUtil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backEnd/src/main/java/com/hackoover/config/OAuthSuccessHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/backEnd/src/main/java/com/hackoover/config/OAuthSuccessHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backEnd/src/main/java/com/hackoover/model/Lesson.java" beforeDir="false" afterPath="$PROJECT_DIR$/backEnd/src/main/java/com/hackoover/model/Lesson.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backEnd/src/main/java/com/hackoover/service/AuthServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/backEnd/src/main/java/com/hackoover/service/AuthServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backEnd/src/main/java/com/hackoover/service/CourseService.java" beforeDir="false" afterPath="$PROJECT_DIR$/backEnd/src/main/java/com/hackoover/service/CourseService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backEnd/src/main/java/com/hackoover/service/LessonService.java" beforeDir="false" afterPath="$PROJECT_DIR$/backEnd/src/main/java/com/hackoover/service/LessonService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backEnd/target/classes/com/hackoover/config/JwtUtil.class" beforeDir="false" afterPath="$PROJECT_DIR$/backEnd/target/classes/com/hackoover/config/JwtUtil.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backEnd/target/classes/com/hackoover/config/OAuthSuccessHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/backEnd/target/classes/com/hackoover/config/OAuthSuccessHandler.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backEnd/target/classes/com/hackoover/model/Lesson.class" beforeDir="false" afterPath="$PROJECT_DIR$/backEnd/target/classes/com/hackoover/model/Lesson.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backEnd/target/classes/com/hackoover/service/AuthServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/backEnd/target/classes/com/hackoover/service/AuthServiceImpl.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backEnd/target/classes/com/hackoover/service/CourseService.class" beforeDir="false" afterPath="$PROJECT_DIR$/backEnd/target/classes/com/hackoover/service/CourseService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backEnd/target/classes/com/hackoover/service/LessonService.class" beforeDir="false" afterPath="$PROJECT_DIR$/backEnd/target/classes/com/hackoover/service/LessonService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/claude.md" beforeDir="false" afterPath="$PROJECT_DIR$/claude.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontEnd/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontEnd/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontEnd/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontEnd/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontEnd/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontEnd/src/App.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontEnd/src/api/api.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontEnd/src/api/api.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontEnd/src/auth/authTokenProvider.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontEnd/src/components/navbar/NavBar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontEnd/src/components/navbar/NavBar.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontEnd/src/main.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontEnd/src/main.tsx" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="EmbeddingIndexingInfo">
-    <option name="cachedIndexableFilesCount" value="170" />
+    <option name="cachedIndexableFilesCount" value="201" />
     <option name="fileBasedEmbeddingIndicesEnabled" value="true" />
   </component>
   <component name="FileTemplateManagerImpl">
@@ -26,6 +49,21 @@
       </list>
     </option>
   </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;LeoDouBrazzzil&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/LeoDouBrazzzil/hackoover_course.git&quot;,
+    &quot;accountId&quot;: &quot;8b2ba7ae-a55a-4f50-8c33-7877fb626f45&quot;
+  }
+}</component>
   <component name="KubernetesApiPersistence">{}</component>
   <component name="KubernetesApiProvider">{
   &quot;isMigrated&quot;: true
@@ -56,9 +94,11 @@
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
     &quot;Spring Boot.HackooverApplication.executor&quot;: &quot;Debug&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
     &quot;javascript.preferred.runtime.type.id&quot;: &quot;node&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
     &quot;last_opened_file_path&quot;: &quot;C:/Users/leo/WebstormProjects/hackoover_course/frontEnd/src/components/courses/CourseCard&quot;,
@@ -71,7 +111,7 @@
     &quot;npm.dev.executor&quot;: &quot;Run&quot;,
     &quot;npm.npm dev.executor&quot;: &quot;Run&quot;,
     &quot;npm.start.executor&quot;: &quot;Run&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;com.intellij.code.provenance.core.claude.hooks&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;com.anthropic.code.plugin.settings&quot;,
     &quot;ts.external.directory.path&quot;: &quot;C:\\Users\\leo\\WebstormProjects\\hackoover_course\\frontEnd\\node_modules\\typescript\\lib&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
@@ -199,11 +239,18 @@
       <workItem from="1773063772053" duration="1257000" />
       <workItem from="1773083402362" duration="7903000" />
       <workItem from="1773152099723" duration="19000" />
-      <workItem from="1773167610255" duration="491000" />
+      <workItem from="1773167610255" duration="2938000" />
+      <workItem from="1773182485892" duration="268000" />
+      <workItem from="1773182780917" duration="1965000" />
+      <workItem from="1773184784191" duration="152000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="création et améiloration de la gestion des cours" />
+    <option name="LAST_COMMIT_MESSAGE" value="création et améiloration de la gestion des cours" />
   </component>
 </project>
