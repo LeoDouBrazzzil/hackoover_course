@@ -1,0 +1,78 @@
+{
+  "name": "hackoover_course",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "lint": "eslint .",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@auth0/auth0-react": "^2.15.0",
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.1",
+    "@mui/material": "^7.3.5",
+    "@reduxjs/toolkit": "^2.11.2",
+    "@tanstack/react-query": "^5.90.10",
+    "@tanstack/react-query-devtools": "^5.90.2",
+    "archiver": "^7.0.1",
+    "axios": "^1.13.6",
+    "lucide-react": "^0.554.0",
+    "node": "^25.2.0",
+    "qs": "^6.14.0",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "react-markdown": "^10.1.0",
+    "react-redux": "^9.2.0",
+    "react-router-dom": "^6.30.2",
+    "redux": "^5.0.1",
+    "styled-components": "^6.1.19",
+    "vite-tsconfig-paths": "^5.1.4"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.39.1",
+    "@types/node": "^24.10.0",
+    "@types/qs": "^6.14.0",
+    "@types/react": "^19.2.2",
+    "@types/react-dom": "^19.2.2",
+    "@vitejs/plugin-react": "^5.1.0",
+    "eslint": "^9.39.1",
+    "eslint-plugin-react-hooks": "^7.0.1",
+    "eslint-plugin-react-refresh": "^0.4.24",
+    "globals": "^16.5.0",
+    "typescript": "~5.9.3",
+    "typescript-eslint": "^8.46.3",
+    "vite": "^7.2.2"
+  },
+  "paths": {
+    "@api/*": [
+      "src/api/*"
+    ],
+    "@components/*": [
+      "src/component/*"
+    ],
+    "@pages/*": [
+      "src/pages/*"
+    ],
+    "@styles/*": [
+      "src/styles/*"
+    ],
+    "@types/*": [
+      "src/types/*"
+    ],
+    "@utils/*": [
+      "src/utils/*"
+    ],
+    "@config/*": [
+      "src/config/*"
+    ],
+    "@store/*": [
+      "src/store/*"
+    ],
+    "@assets/*": [
+      "src/assets/*"
+    ]
+  }
+}

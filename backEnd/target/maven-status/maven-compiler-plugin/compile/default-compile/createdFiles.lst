@@ -1,0 +1,14 @@
+com\hackoover\HackooverApplication.class
+com\hackoover\service\CourseService.class
+com\hackoover\controller\UserProgressController.class
+com\hackoover\service\UserProgressService.class
+com\hackoover\controller\LessonController.class
+com\hackoover\repository\LessonRepository.class
+com\hackoover\model\Lesson.class
+com\hackoover\model\User.class
+com\hackoover\repository\UserProgressRepository.class
+com\hackoover\model\UserProgress.class
+com\hackoover\controller\CourseController.class
+com\hackoover\model\Course.class
+com\hackoover\repository\CourseRepository.class
+com\hackoover\service\LessonService.class
