@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { useIntl } from "react-intl";
 import api from "api/api";
 import ReactMarkdown from "react-markdown";
 import {DetailContainer, DetailGrid, LessonsList} from "pages/CourseDetails/CourseDetail.styles.tsx";
@@ -7,6 +8,7 @@ import LessonItem from "components/courses/LessonItem/LessonItem.tsx";
 
 
 export default function CourseDetail(){
+    const intl = useIntl();
     const urlParams = new URLSearchParams(window.location.search);
     const courseId = urlParams.get("id");
     const [user,setUser] = useState<any>(null);
@@ -45,7 +47,7 @@ export default function CourseDetail(){
                             <ReactMarkdown>{course.description || ""}</ReactMarkdown>
                         </div>
                         <div>
-                            <h3>Leçons</h3>
+                            <h3>{intl.formatMessage({ id: "course_detail.lessons" })}</h3>
                             <LessonsList>
                                 {lessons.map((lesson:any,idx:number)=>(
                                     <LessonItem key={lesson.id} lesson={lesson} isCompleted={isCompleted(lesson.id)} onClick={()=>setSelectedLesson(lesson)} index={idx} />
@@ -53,7 +55,7 @@ export default function CourseDetail(){
                             </LessonsList>
 
                             <div style={{marginTop:12}}>
-                                <button style={{padding:'10px 14px',background:'#000',color:'#fff',borderRadius:8}} onClick={()=>{ if(selectedLesson && user) completeMutation.mutate(selectedLesson.id) }}>Marquer comme complétée</button>
+                                <button style={{padding:'10px 14px',background:'#000',color:'#fff',borderRadius:8}} onClick={()=>{ if(selectedLesson && user) completeMutation.mutate(selectedLesson.id) }}>{intl.formatMessage({ id: "course_detail.mark_complete" })}</button>
                             </div>
                         </div>
                     </DetailGrid>

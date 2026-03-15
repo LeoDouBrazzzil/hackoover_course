@@ -2,19 +2,19 @@ import styled, { createGlobalStyle, keyframes } from "styled-components";
 
 // ─── Design Tokens ────────────────────────────────────────────────────────────
 export const tokens = {
-  bg:          "#ffffff",
-  surface:     "#ffffff",
-  surface2:    "#f4f4f5",
-  border:      "rgba(0,0,0,0.08)",
-  borderActive:"rgba(0,0,0,0.2)",
-  text:        "#0a0a0a",
-  muted:       "#6b7280",
-  accent:      "#0a0a0a",
+  bg:          "var(--bg)",
+  surface:     "var(--surface)",
+  surface2:    "var(--bg-3)",
+  border:      "var(--border)",
+  borderActive:"var(--border-2)",
+  text:        "var(--text)",
+  muted:       "var(--text-3)",
+  accent:      "var(--accent)",
   accentGlow:  "rgba(0,0,0,0.08)",
-  accentHover: "#1a1a1a",
-  btnBg:       "#f4f4f5",
-  btnHover:    "#e5e7eb",
-  font:        "'Sora', sans-serif",
+  accentHover: "color-mix(in srgb, var(--accent) 85%, transparent)",
+  btnBg:       "var(--bg-3)",
+  btnHover:    "var(--border-2)",
+  font:        '"Geist", sans-serif',
   mono:        "'JetBrains Mono', monospace",
 } as const;
 
@@ -35,7 +35,7 @@ const spin = keyframes`
 
 // ─── Global Styles ────────────────────────────────────────────────────────────
 export const GlobalStyle = createGlobalStyle`
-  @import url('https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap');
 
   *, *::before, *::after {
     box-sizing: border-box;
@@ -44,7 +44,7 @@ export const GlobalStyle = createGlobalStyle`
   }
 
   body {
-    background: ${tokens.bg};
+    background: var(--bg);
     font-family: ${tokens.font};
   }
 `;
@@ -54,7 +54,7 @@ export const Page = styled.div`
   min-height: 100vh;
   display: grid;
   place-items: center;
-  background: radial-gradient(125% 125% at 50% 90%, #fff 40%, #475569 100%);
+  background: radial-gradient(125% 125% at 50% 90%, var(--surface) 40%, #475569 100%);
   padding: 24px;
   position: relative;
   overflow: hidden;
@@ -90,8 +90,8 @@ export const Page = styled.div`
 export const Card = styled.div`
   width: 100%;
   max-width: 440px;
-  background: ${tokens.surface};
-  border: 1px solid ${tokens.border};
+  background: var(--surface);
+  border: 1px solid var(--border);
   border-radius: 20px;
   padding: 48px 40px;
   position: relative;
@@ -118,14 +118,14 @@ export const LogoWrap = styled.div`
 export const LogoMark = styled.div`
   width: 36px;
   height: 36px;
-  background: ${tokens.accent};
+  background: var(--accent);
   border-radius: 10px;
   display: grid;
   place-items: center;
   font-family: ${tokens.mono};
   font-size: 14px;
   font-weight: 500;
-  color: white;
+  color: var(--accent-fg);
   letter-spacing: -1px;
   box-shadow: 0 2px 8px rgba(0,0,0,0.18);
 `;
@@ -133,7 +133,7 @@ export const LogoMark = styled.div`
 export const LogoText = styled.span`
   font-size: 17px;
   font-weight: 600;
-  color: ${tokens.text};
+  color: var(--text);
   letter-spacing: -0.3px;
 `;
 
@@ -141,7 +141,7 @@ export const LogoText = styled.span`
 export const Title = styled.h1`
   font-size: 26px;
   font-weight: 700;
-  color: ${tokens.text};
+  color: var(--text);
   letter-spacing: -0.5px;
   margin-bottom: 6px;
   line-height: 1.2;
@@ -153,7 +153,7 @@ export const Title = styled.h1`
 
 export const Subtitle = styled.p`
   font-size: 14px;
-  color: ${tokens.muted};
+  color: var(--text-3);
   margin-bottom: 32px;
   font-weight: 400;
 `;
@@ -176,10 +176,10 @@ export const SocialButton = styled.button`
   justify-content: center;
   gap: 8px;
   padding: 11px 14px;
-  background: ${tokens.surface2};
-  border: 1px solid ${tokens.border};
+  background: var(--bg-3);
+  border: 1px solid var(--border);
   border-radius: 11px;
-  color: ${tokens.text};
+  color: var(--text);
   font-family: ${tokens.font};
   font-size: 13.5px;
   font-weight: 500;
@@ -188,7 +188,7 @@ export const SocialButton = styled.button`
   white-space: nowrap;
 
   &:hover {
-    background: ${tokens.btnHover};
+    background: var(--border-2);
     border-color: rgba(0,0,0,0.14);
     transform: translateY(-1px);
     box-shadow: 0 4px 16px rgba(0,0,0,0.08);
@@ -210,12 +210,12 @@ export const Divider = styled.div`
 export const DividerLine = styled.div`
   flex: 1;
   height: 1px;
-  background: ${tokens.border};
+  background: var(--border);
 `;
 
 export const DividerText = styled.span`
   font-size: 12px;
-  color: ${tokens.muted};
+  color: var(--text-3);
   font-weight: 500;
   letter-spacing: 0.5px;
   text-transform: uppercase;
@@ -242,10 +242,10 @@ export const InputWrap = styled.div`
 export const Input = styled.input<{ $hasToggle?: boolean }>`
   width: 100%;
   padding: ${({ $hasToggle }) => ($hasToggle ? "12px 46px 12px 16px" : "12px 16px")};
-  background: ${tokens.surface2};
-  border: 1px solid ${tokens.border};
+  background: var(--bg-3);
+  border: 1px solid var(--border);
   border-radius: 12px;
-  color: ${tokens.text};
+  color: var(--text);
   font-family: ${tokens.font};
   font-size: 14.5px;
   font-weight: 400;
@@ -254,7 +254,7 @@ export const Input = styled.input<{ $hasToggle?: boolean }>`
   -webkit-appearance: none;
 
   &::placeholder {
-    color: #9ca3af;
+    color: var(--text-4);
   }
 
   &:hover {
@@ -262,9 +262,9 @@ export const Input = styled.input<{ $hasToggle?: boolean }>`
   }
 
   &:focus {
-    border-color: ${tokens.borderActive};
-    background: ${tokens.surface};
-    box-shadow: 0 0 0 3px ${tokens.accentGlow};
+    border-color: var(--border-2);
+    background: var(--surface);
+    box-shadow: 0 0 0 3px rgba(0,0,0,0.08);
   }
 `;
 
@@ -275,7 +275,7 @@ export const TogglePasswordButton = styled.button`
   transform: translateY(-50%);
   background: none;
   border: none;
-  color: ${tokens.muted};
+  color: var(--text-3);
   cursor: pointer;
   padding: 4px;
   display: flex;
@@ -283,7 +283,7 @@ export const TogglePasswordButton = styled.button`
   transition: color 0.15s;
 
   &:hover {
-    color: ${tokens.text};
+    color: var(--text);
   }
 `;
 
@@ -304,27 +304,27 @@ export const CheckboxWrap = styled.label`
   input[type="checkbox"] {
     width: 16px;
     height: 16px;
-    accent-color: ${tokens.accent};
+    accent-color: var(--accent);
     cursor: pointer;
     border-radius: 4px;
   }
 
   span {
     font-size: 13px;
-    color: ${tokens.muted};
+    color: var(--text-3);
     font-weight: 400;
   }
 `;
 
 export const ForgotLink = styled.a`
   font-size: 13px;
-  color: ${tokens.accent};
+  color: var(--accent);
   font-weight: 500;
   text-decoration: none;
   transition: color 0.15s;
 
   &:hover {
-    color: ${tokens.accentHover};
+    color: color-mix(in srgb, var(--accent) 85%, transparent);
   }
 `;
 
@@ -332,10 +332,10 @@ export const ForgotLink = styled.a`
 export const SubmitButton = styled.button`
   width: 100%;
   padding: 13px;
-  background: ${tokens.accent};
+  background: var(--accent);
   border: none;
   border-radius: 12px;
-  color: white;
+  color: var(--accent-fg);
   font-family: ${tokens.font};
   font-size: 15px;
   font-weight: 600;
@@ -360,7 +360,7 @@ export const SubmitButton = styled.button`
   }
 
   &:hover {
-    background: ${tokens.accentHover};
+    background: color-mix(in srgb, var(--accent) 85%, transparent);
     transform: translateY(-1px);
     box-shadow: 0 8px 24px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.1);
   }
@@ -392,16 +392,16 @@ export const CardFooter = styled.p`
   text-align: center;
   margin-top: 24px;
   font-size: 13.5px;
-  color: ${tokens.muted};
+  color: var(--text-3);
 
   a {
-    color: ${tokens.accent};
+    color: var(--accent);
     font-weight: 500;
     text-decoration: none;
     transition: color 0.15s;
 
     &:hover {
-      color: ${tokens.accentHover};
+      color: color-mix(in srgb, var(--accent) 85%, transparent);
     }
   }
 `;
@@ -409,12 +409,12 @@ export const CardFooter = styled.p`
 export const Terms = styled.p`
   text-align: center;
   font-size: 11.5px;
-  color: #9ca3af;
+  color: var(--text-4);
   margin-top: 20px;
   line-height: 1.6;
 
   a {
-    color: #6b7280;
+    color: var(--text-3);
     text-decoration: underline;
   }
 `;

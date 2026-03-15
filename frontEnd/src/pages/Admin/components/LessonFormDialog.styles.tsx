@@ -25,7 +25,7 @@ export const Overlay = styled.div`
 `;
 
 export const Modal = styled.div`
-  background: #fff;
+  background: var(--surface);
   border-radius: 18px;
   width: 100%;
   max-width: 860px;
@@ -43,17 +43,16 @@ export const ModalHeader = styled.div`
   align-items: center;
   justify-content: space-between;
   padding: 20px 24px;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.07);
+  border-bottom: 1px solid var(--border);
   flex-shrink: 0;
 `;
 
 export const ModalTitle = styled.h2`
   font-size: 1.05rem;
   font-weight: 700;
-  color: #0a0a0a;
+  color: var(--text);
   margin: 0;
   letter-spacing: -0.02em;
-  font-family: 'Sora', sans-serif;
 `;
 
 export const CloseBtn = styled.button`
@@ -65,10 +64,10 @@ export const CloseBtn = styled.button`
   border-radius: 8px;
   border: none;
   background: transparent;
-  color: #9ca3af;
+  color: var(--text-4);
   cursor: pointer;
   transition: all 0.2s;
-  &:hover { background: #f4f4f5; color: #0a0a0a; }
+  &:hover { background: var(--bg-3); color: var(--text); }
 `;
 
 export const ModalBody = styled.div`
@@ -89,8 +88,8 @@ export const ModalFooter = styled.div`
   justify-content: flex-end;
   gap: 10px;
   padding: 16px 24px;
-  border-top: 1px solid rgba(0, 0, 0, 0.07);
-  background: #fafafa;
+  border-top: 1px solid var(--border);
+  background: var(--bg-2);
   flex-shrink: 0;
 `;
 
@@ -101,25 +100,23 @@ export const Field = styled.div`
 `;
 
 export const Label = styled.label`
-  font-family: 'Sora', sans-serif;
   font-size: 0.8125rem;
   font-weight: 600;
-  color: #374151;
+  color: var(--text-2);
 `;
 
 export const Input = styled.input`
   padding: 10px 14px;
-  border: 1px solid rgba(0, 0, 0, 0.12);
+  border: 1px solid var(--border-2);
   border-radius: 10px;
-  font-family: 'Sora', sans-serif;
   font-size: 0.875rem;
-  color: #0a0a0a;
-  background: #fff;
+  color: var(--text);
+  background: var(--surface);
   transition: border-color 0.2s;
   outline: none;
 
-  &:focus { border-color: #0a0a0a; }
-  &::placeholder { color: #9ca3af; }
+  &:focus { border-color: var(--text); }
+  &::placeholder { color: var(--text-4); }
 `;
 
 export const Row = styled.div`
@@ -134,28 +131,27 @@ export const TabsWrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 0;
-  border: 1px solid rgba(0, 0, 0, 0.1);
+  border: 1px solid var(--border-2);
   border-radius: 12px;
   overflow: hidden;
 `;
 
 export const TabBar = styled.div`
   display: flex;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
-  background: #f9fafb;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg-2);
 `;
 
 export const TabBtn = styled.button<{ $active: boolean }>`
   padding: 10px 20px;
   border: none;
   background: transparent;
-  font-family: 'Sora', sans-serif;
   font-size: 0.8125rem;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.2s;
   position: relative;
-  color: ${({ $active }) => ($active ? '#0a0a0a' : '#6b7280')};
+  color: ${({ $active }) => ($active ? 'var(--text)' : 'var(--text-3)')};
 
   &::after {
     content: '';
@@ -164,16 +160,16 @@ export const TabBtn = styled.button<{ $active: boolean }>`
     left: 0;
     right: 0;
     height: 2px;
-    background: #0a0a0a;
+    background: var(--text);
     transform: scaleX(${({ $active }) => ($active ? 1 : 0)});
     transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
-  &:hover { color: #0a0a0a; background: rgba(0,0,0,0.03); }
+  &:hover { color: var(--text); background: rgba(0,0,0,0.03); }
 `;
 
 export const TabContent = styled.div`
-  background: #fff;
+  background: var(--surface);
   min-height: 320px;
 `;
 
@@ -185,22 +181,20 @@ export const ErrorMsg = styled.div`
   color: #b91c1c;
   border: 1px solid #fecaca;
   border-radius: 10px;
-  font-family: 'Sora', sans-serif;
   font-size: 0.8125rem;
 `;
 
 export const CancelBtn = styled.button`
   padding: 9px 18px;
   border-radius: 9px;
-  border: 1px solid rgba(0, 0, 0, 0.1);
-  background: #fff;
-  font-family: 'Sora', sans-serif;
+  border: 1px solid var(--border-2);
+  background: var(--surface);
   font-size: 0.875rem;
   font-weight: 600;
-  color: #374151;
+  color: var(--text-2);
   cursor: pointer;
   transition: all 0.2s;
-  &:hover { background: #f9fafb; }
+  &:hover { background: var(--bg-2); }
   &:disabled { opacity: 0.5; cursor: not-allowed; }
 `;
 
@@ -208,13 +202,12 @@ export const SaveBtn = styled.button`
   padding: 9px 20px;
   border-radius: 9px;
   border: none;
-  background: #0a0a0a;
-  font-family: 'Sora', sans-serif;
+  background: var(--accent);
   font-size: 0.875rem;
   font-weight: 600;
-  color: #fff;
+  color: var(--accent-fg);
   cursor: pointer;
   transition: all 0.2s;
-  &:hover:not(:disabled) { background: #1a1a1a; }
+  &:hover:not(:disabled) { background: color-mix(in srgb, var(--accent) 85%, transparent); }
   &:disabled { opacity: 0.5; cursor: not-allowed; }
 `;

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useIntl } from "react-intl";
 import * as S from "./RegisterPage.styles";
 import {GoogleIcon} from "assets/icon/GoogleIcon.tsx";
 import {FacebookIcon} from "assets/icon/FacebookIcon.tsx";
@@ -27,31 +28,34 @@ interface PasswordStrength {
 
 
 // ─── Password strength helper ─────────────────────────────────────────────────
-const PW_RULES = [
-  { id: "len",   label: "8 caractères minimum", test: (v: string) => v.length >= 8 },
-  { id: "upper", label: "Une lettre majuscule",  test: (v: string) => /[A-Z]/.test(v) },
-  { id: "num",   label: "Un chiffre",            test: (v: string) => /[0-9]/.test(v) },
-  { id: "sym",   label: "Un caractère spécial",  test: (v: string) => /[^A-Za-z0-9]/.test(v) },
-];
-
-function getStrength(pw: string): PasswordStrength {
+function getStrength(pw: string, map: Record<number, { label: string; color: string }>): PasswordStrength {
   if (!pw) return { score: 0, label: "", color: "transparent" };
   let score = 0;
   if (pw.length >= 8)           score++;
   if (/[A-Z]/.test(pw))         score++;
   if (/[0-9]/.test(pw))         score++;
   if (/[^A-Za-z0-9]/.test(pw))  score++;
-  const map: Record<number, { label: string; color: string }> = {
-    1: { label: "Faible", color: "#ef4444" },
-    2: { label: "Moyen",  color: "#f97316" },
-    3: { label: "Bon",    color: "#eab308" },
-    4: { label: "Fort",   color: "#22c55e" },
-  };
-  return { score, ...(map[score] ?? { label: "Faible", color: "#ef4444" }) };
+  return { score, ...(map[score] ?? { label: map[1].label, color: "#ef4444" }) };
 }
 
 // ─── Component ────────────────────────────────────────────────────────────────
 export default function RegisterPage() {
+  const intl = useIntl();
+
+  const PW_RULES = [
+    { id: "len",   label: intl.formatMessage({ id: "register.pw_rule.length" }), test: (v: string) => v.length >= 8 },
+    { id: "upper", label: intl.formatMessage({ id: "register.pw_rule.upper" }),  test: (v: string) => /[A-Z]/.test(v) },
+    { id: "num",   label: intl.formatMessage({ id: "register.pw_rule.number" }), test: (v: string) => /[0-9]/.test(v) },
+    { id: "sym",   label: intl.formatMessage({ id: "register.pw_rule.symbol" }), test: (v: string) => /[^A-Za-z0-9]/.test(v) },
+  ];
+
+  const strengthMap: Record<number, { label: string; color: string }> = {
+    1: { label: intl.formatMessage({ id: "register.pw_strength.weak" }),  color: "#ef4444" },
+    2: { label: intl.formatMessage({ id: "register.pw_strength.fair" }),  color: "#f97316" },
+    3: { label: intl.formatMessage({ id: "register.pw_strength.good" }),  color: "#eab308" },
+    4: { label: intl.formatMessage({ id: "register.pw_strength.strong" }), color: "#22c55e" },
+  };
+
   const [form, setForm] = useState<FormState>({
     username: "", firstName: "", lastName: "", email: "",
     password: "", confirmPassword: "", terms: false,
@@ -66,7 +70,7 @@ export default function RegisterPage() {
   const set = (key: keyof FormState) => (e: React.ChangeEvent<HTMLInputElement>) =>
     setForm(f => ({ ...f, [key]: e.target.type === "checkbox" ? e.target.checked : e.target.value }));
 
-  const strength          = getStrength(form.password);
+  const strength          = getStrength(form.password, strengthMap);
   const passwordsMatch    = !!form.confirmPassword && form.password === form.confirmPassword;
   const passwordsMismatch = !!form.confirmPassword && form.password !== form.confirmPassword;
 
@@ -94,7 +98,7 @@ export default function RegisterPage() {
         setLoading(false);
       }
     } catch (err: any) {
-      setError(err.response?.data?.message || "Erreur lors de l'inscription");
+      setError(err.response?.data?.message || intl.formatMessage({ id: "register.error" }));
       setLoading(false);
     }
   };
@@ -120,21 +124,21 @@ export default function RegisterPage() {
                   <polyline points="20 6 9 17 4 12"/>
                 </svg>
               </S.SuccessIcon>
-              <S.SuccessTitle>Compte créé avec succès !</S.SuccessTitle>
+              <S.SuccessTitle>{intl.formatMessage({ id: "register.success.title" })}</S.SuccessTitle>
               <S.SuccessText>
-                Un e-mail de confirmation a été envoyé à<br/>
+                {intl.formatMessage({ id: "register.success.text" })}<br/>
                 <strong style={{ color: S.tokens.text }}>{form.email}</strong>
               </S.SuccessText>
               <S.CardFooter style={{ marginTop: 24 }}>
-                <Link to="/login">Aller à la connexion →</Link>
+                <Link to="/login">{intl.formatMessage({ id: "register.success.login" })}</Link>
               </S.CardFooter>
             </S.SuccessBox>
 
           ) : (
             <>
               {/* ── Heading ── */}
-              <S.Title>Créer un compte</S.Title>
-              <S.Subtitle>Rejoignez des milliers d'utilisateurs dès aujourd'hui.</S.Subtitle>
+              <S.Title>{intl.formatMessage({ id: "register.title" })}</S.Title>
+              <S.Subtitle>{intl.formatMessage({ id: "register.subtitle" })}</S.Subtitle>
 
               {/* ── Social buttons ── */}
               <S.SocialsGrid>
@@ -145,7 +149,7 @@ export default function RegisterPage() {
               {/* ── Divider ── */}
               <S.Divider>
                 <S.DividerLine />
-                <S.DividerText>ou</S.DividerText>
+                <S.DividerText>{intl.formatMessage({ id: "common.or" })}</S.DividerText>
                 <S.DividerLine />
               </S.Divider>
 
@@ -168,7 +172,7 @@ export default function RegisterPage() {
 
                 {/* Username */}
                 <S.Field>
-                  <label htmlFor="username">Nom d'utilisateur</label>
+                  <label htmlFor="username">{intl.formatMessage({ id: "register.username_label" })}</label>
                   <S.Input
                     id="username"
                     type="text"
@@ -183,11 +187,11 @@ export default function RegisterPage() {
                 {/* Prénom / Nom */}
                 <S.FieldRow>
                   <S.Field>
-                    <label htmlFor="firstName">Prénom</label>
+                    <label htmlFor="firstName">{intl.formatMessage({ id: "register.firstname_label" })}</label>
                     <S.Input
                       id="firstName"
                       type="text"
-                      placeholder="Jean"
+                      placeholder={intl.formatMessage({ id: "register.firstname_placeholder" })}
                       value={form.firstName}
                       onChange={set("firstName")}
                       autoComplete="given-name"
@@ -195,11 +199,11 @@ export default function RegisterPage() {
                     />
                   </S.Field>
                   <S.Field>
-                    <label htmlFor="lastName">Nom</label>
+                    <label htmlFor="lastName">{intl.formatMessage({ id: "register.lastname_label" })}</label>
                     <S.Input
                       id="lastName"
                       type="text"
-                      placeholder="Dupont"
+                      placeholder={intl.formatMessage({ id: "register.lastname_placeholder" })}
                       value={form.lastName}
                       onChange={set("lastName")}
                       autoComplete="family-name"
@@ -210,11 +214,11 @@ export default function RegisterPage() {
 
                 {/* Email */}
                 <S.Field>
-                  <label htmlFor="email">Adresse e-mail</label>
+                  <label htmlFor="email">{intl.formatMessage({ id: "register.email_label" })}</label>
                   <S.Input
                     id="email"
                     type="email"
-                    placeholder="jean.dupont@exemple.com"
+                    placeholder={intl.formatMessage({ id: "register.email_placeholder" })}
                     value={form.email}
                     onChange={set("email")}
                     autoComplete="email"
@@ -224,7 +228,7 @@ export default function RegisterPage() {
 
                 {/* Mot de passe */}
                 <S.Field>
-                  <label htmlFor="password">Mot de passe</label>
+                  <label htmlFor="password">{intl.formatMessage({ id: "register.password_label" })}</label>
                   <S.InputWrap>
                     <S.Input
                       id="password"
@@ -241,7 +245,7 @@ export default function RegisterPage() {
                     <S.TogglePasswordButton
                       type="button"
                       onClick={() => setShowPw(v => !v)}
-                      aria-label={showPw ? "Masquer" : "Afficher"}
+                      aria-label={showPw ? intl.formatMessage({ id: "register.hide_password" }) : intl.formatMessage({ id: "register.show_password" })}
                     >
                       <EyeIcon open={showPw} />
                     </S.TogglePasswordButton>
@@ -284,7 +288,7 @@ export default function RegisterPage() {
 
                 {/* Confirmation mot de passe */}
                 <S.Field>
-                  <label htmlFor="confirmPassword">Confirmer le mot de passe</label>
+                  <label htmlFor="confirmPassword">{intl.formatMessage({ id: "register.confirm_password_label" })}</label>
                   <S.InputWrap>
                     <S.Input
                       id="confirmPassword"
@@ -301,17 +305,17 @@ export default function RegisterPage() {
                     <S.TogglePasswordButton
                       type="button"
                       onClick={() => setShowConfirm(v => !v)}
-                      aria-label={showConfirm ? "Masquer" : "Afficher"}
+                      aria-label={showConfirm ? intl.formatMessage({ id: "register.hide_password" }) : intl.formatMessage({ id: "register.show_password" })}
                     >
                       <EyeIcon open={showConfirm} />
                     </S.TogglePasswordButton>
                   </S.InputWrap>
 
                   {passwordsMatch && (
-                    <S.MatchHint $ok><CheckIcon /> Les mots de passe correspondent</S.MatchHint>
+                    <S.MatchHint $ok><CheckIcon /> {intl.formatMessage({ id: "register.pw_match" })}</S.MatchHint>
                   )}
                   {passwordsMismatch && (
-                    <S.MatchHint><CrossIcon /> Les mots de passe ne correspondent pas</S.MatchHint>
+                    <S.MatchHint><CrossIcon /> {intl.formatMessage({ id: "register.pw_mismatch" })}</S.MatchHint>
                   )}
                 </S.Field>
 
@@ -325,9 +329,9 @@ export default function RegisterPage() {
                     required
                   />
                   <span>
-                    J'accepte les{" "}
-                    <a href="#">Conditions d'utilisation</a> et la{" "}
-                    <a href="#">Politique de confidentialité</a> de Hackoover.
+                    {intl.formatMessage({ id: "register.terms_prefix" })}{" "}
+                    <a href="#">{intl.formatMessage({ id: "register.terms_link" })}</a> {intl.formatMessage({ id: "register.terms_and" })}{" "}
+                    <a href="#">{intl.formatMessage({ id: "register.privacy_link" })}</a> {intl.formatMessage({ id: "register.terms_suffix" })}
                   </span>
                 </S.TermsRow>
 
@@ -336,13 +340,13 @@ export default function RegisterPage() {
                   type="submit"
                   disabled={loading || !form.terms || !!passwordsMismatch}
                 >
-                  {loading ? <S.Spinner /> : "Créer mon compte"}
+                  {loading ? <S.Spinner /> : intl.formatMessage({ id: "register.submit" })}
                 </S.SubmitButton>
               </form>
 
               {/* Footer */}
               <S.CardFooter>
-                Déjà un compte ? <Link to="/login">Se connecter</Link>
+                {intl.formatMessage({ id: "register.already_account" })} <Link to="/login">{intl.formatMessage({ id: "register.login_link" })}</Link>
               </S.CardFooter>
             </>
           )}

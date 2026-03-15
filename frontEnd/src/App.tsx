@@ -8,6 +8,7 @@ import Dashboard from "pages/Dashboard/Dashboard.tsx";
 import Home from "pages/Home/Home.tsx";
 import { EditorDemo } from "pages/EditorDemo/EditorDemo.tsx";
 import { AdminCourses } from "pages/Admin/AdminCourses.tsx";
+import Tarifs from "pages/Tarifs/Tarifs.tsx";
 
 
 export default function App() {
@@ -21,6 +22,7 @@ export default function App() {
             <Route element={<Layout><Courses /></Layout>}     path="/courses" />
             <Route element={<Layout><CourseDetail /></Layout>} path="/course-detail" />
             <Route element={<Layout><Dashboard /></Layout>}   path="/dashboard" />
+            <Route element={<Layout><Tarifs /></Layout>}      path="/tarifs" />
             <Route element={<Layout><Home /></Layout>}        path="/" />
 
             {/* ── Admin routes ── */}

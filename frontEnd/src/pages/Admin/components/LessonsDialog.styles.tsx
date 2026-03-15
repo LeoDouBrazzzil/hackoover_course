@@ -24,7 +24,7 @@ export const Overlay = styled.div`
 `;
 
 export const Modal = styled.div`
-  background: #fff;
+  background: var(--surface);
   border-radius: 18px;
   width: 100%;
   max-width: 660px;
@@ -41,7 +41,7 @@ export const ModalHeader = styled.div`
   align-items: flex-start;
   justify-content: space-between;
   padding: 20px 24px;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.07);
+  border-bottom: 1px solid var(--border);
   flex-shrink: 0;
 `;
 
@@ -50,17 +50,15 @@ export const HeaderInfo = styled.div``;
 export const ModalTitle = styled.h2`
   font-size: 1.05rem;
   font-weight: 700;
-  color: #0a0a0a;
+  color: var(--text);
   margin: 0 0 3px;
   letter-spacing: -0.02em;
-  font-family: 'Sora', sans-serif;
 `;
 
 export const ModalSubtitle = styled.p`
   font-size: 0.8125rem;
-  color: #6b7280;
+  color: var(--text-3);
   margin: 0;
-  font-family: 'Sora', sans-serif;
 `;
 
 export const CloseBtn = styled.button`
@@ -72,11 +70,11 @@ export const CloseBtn = styled.button`
   border-radius: 8px;
   border: none;
   background: transparent;
-  color: #9ca3af;
+  color: var(--text-4);
   cursor: pointer;
   transition: all 0.2s;
   flex-shrink: 0;
-  &:hover { background: #f4f4f5; color: #0a0a0a; }
+  &:hover { background: var(--bg-3); color: var(--text); }
 `;
 
 export const ModalBody = styled.div`
@@ -97,9 +95,8 @@ export const TopBar = styled.div`
 `;
 
 export const Count = styled.span`
-  font-family: 'Sora', sans-serif;
   font-size: 0.8125rem;
-  color: #6b7280;
+  color: var(--text-3);
   font-weight: 500;
 `;
 
@@ -108,17 +105,16 @@ export const AddBtn = styled.button`
   align-items: center;
   gap: 6px;
   padding: 8px 14px;
-  background: #0a0a0a;
-  color: #fff;
+  background: var(--accent);
+  color: var(--accent-fg);
   border: none;
   border-radius: 9px;
-  font-family: 'Sora', sans-serif;
   font-size: 0.8125rem;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.2s;
 
-  &:hover { background: #1a1a1a; transform: translateY(-1px); }
+  &:hover { background: color-mix(in srgb, var(--accent) 85%, transparent); transform: translateY(-1px); }
   &:active { transform: translateY(0); }
 `;
 
@@ -133,9 +129,9 @@ export const LessonItem = styled.div`
   align-items: center;
   gap: 12px;
   padding: 14px 16px;
-  border: 1px solid rgba(0, 0, 0, 0.07);
+  border: 1px solid var(--border);
   border-radius: 12px;
-  background: #fff;
+  background: var(--surface);
   transition: all 0.2s;
 
   &:hover {
@@ -145,17 +141,16 @@ export const LessonItem = styled.div`
 `;
 
 export const LessonDragHandle = styled.div`
-  color: #d1d5db;
+  color: var(--border-2);
   display: flex;
   align-items: center;
   flex-shrink: 0;
 `;
 
 export const LessonOrder = styled.span`
-  font-family: 'Sora', sans-serif;
   font-size: 0.75rem;
   font-weight: 700;
-  color: #9ca3af;
+  color: var(--text-4);
   min-width: 20px;
   flex-shrink: 0;
 `;
@@ -166,10 +161,9 @@ export const LessonInfo = styled.div`
 `;
 
 export const LessonTitle = styled.p`
-  font-family: 'Sora', sans-serif;
   font-size: 0.875rem;
   font-weight: 600;
-  color: #0a0a0a;
+  color: var(--text);
   margin: 0 0 3px;
   white-space: nowrap;
   overflow: hidden;
@@ -177,9 +171,8 @@ export const LessonTitle = styled.p`
 `;
 
 export const LessonMeta = styled.span`
-  font-family: 'Sora', sans-serif;
   font-size: 0.75rem;
-  color: #9ca3af;
+  color: var(--text-4);
 `;
 
 export const LessonActions = styled.div`
@@ -201,8 +194,8 @@ export const IconBtn = styled.button<{ $danger?: boolean }>`
 
   ${({ $danger }) =>
     $danger
-      ? 'background:#fff; border-color:rgba(239,68,68,0.2); color:#ef4444; &:hover{background:#fef2f2; border-color:#ef4444;}'
-      : 'background:#fff; border-color:rgba(0,0,0,0.1); color:#6b7280; &:hover{background:#f9fafb; color:#0a0a0a; border-color:rgba(0,0,0,0.2);}'}
+      ? 'background:var(--surface); border-color:rgba(239,68,68,0.2); color:#ef4444; &:hover{background:#fef2f2; border-color:#ef4444;}'
+      : 'background:var(--surface); border-color:var(--border-2); color:var(--text-3); &:hover{background:var(--bg-2); color:var(--text); border-color:rgba(0,0,0,0.2);}'}
 `;
 
 export const EmptyState = styled.div`
@@ -211,33 +204,32 @@ export const EmptyState = styled.div`
   align-items: center;
   gap: 10px;
   padding: 60px 24px;
-  color: #9ca3af;
+  color: var(--text-4);
   text-align: center;
 
-  p { font-family: 'Sora', sans-serif; font-size: 0.875rem; margin: 0; }
+  p { font-size: 0.875rem; margin: 0; }
 `;
 
 export const ModalFooter = styled.div`
   display: flex;
   justify-content: flex-end;
   padding: 16px 24px;
-  border-top: 1px solid rgba(0, 0, 0, 0.07);
-  background: #fafafa;
+  border-top: 1px solid var(--border);
+  background: var(--bg-2);
   flex-shrink: 0;
 `;
 
 export const CloseFooterBtn = styled.button`
   padding: 9px 20px;
   border-radius: 9px;
-  border: 1px solid rgba(0, 0, 0, 0.1);
-  background: #fff;
-  font-family: 'Sora', sans-serif;
+  border: 1px solid var(--border-2);
+  background: var(--surface);
   font-size: 0.875rem;
   font-weight: 600;
-  color: #374151;
+  color: var(--text-2);
   cursor: pointer;
   transition: all 0.2s;
-  &:hover { background: #f9fafb; }
+  &:hover { background: var(--bg-2); }
 `;
 
 export const ErrorMsg = styled.div`
@@ -246,7 +238,6 @@ export const ErrorMsg = styled.div`
   color: #b91c1c;
   border: 1px solid #fecaca;
   border-radius: 10px;
-  font-family: 'Sora', sans-serif;
   font-size: 0.8125rem;
   margin-bottom: 14px;
 `;

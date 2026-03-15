@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Search, BookOpen } from "lucide-react";
+import { useIntl } from "react-intl";
 
 import CourseCard from "components/courses/CourseCard/CourseCard.tsx";
 
@@ -20,11 +21,15 @@ import {
     EmptyState,
 } from "pages/Courses/Courses.styles.tsx";
 import api from "api/api.ts";
+import { useAccess } from "utils/useAccess.ts";
 
 export default function Courses() {
+    const intl = useIntl();
     const [searchTerm,      setSearchTerm]      = useState("");
     const [levelFilter,     setLevelFilter]     = useState("all");
     const [categoryFilter,  setCategoryFilter]  = useState("all");
+
+    const { canAccess } = useAccess();
 
     const { data: courses = [], isLoading } = useQuery({
         queryKey: ["courses"],
@@ -46,8 +51,8 @@ export default function Courses() {
 
             {/* ── Header ── */}
             <PageHeader>
-                <PageTitle>Catalogue de Cours</PageTitle>
-                <PageSubtitle>Explorez nos formations en cybersécurité</PageSubtitle>
+                <PageTitle>{intl.formatMessage({ id: "courses.page_title" })}</PageTitle>
+                <PageSubtitle>{intl.formatMessage({ id: "courses.page_sub" })}</PageSubtitle>
             </PageHeader>
 
             {/* ── Filters ── */}
@@ -55,7 +60,7 @@ export default function Courses() {
                 <SearchWrap>
                     <Search />
                     <SearchInput
-                        placeholder="Rechercher un cours..."
+                        placeholder={intl.formatMessage({ id: "courses.search_placeholder" })}
                         value={searchTerm}
                         onChange={e => setSearchTerm(e.target.value)}
                     />
@@ -68,11 +73,11 @@ export default function Courses() {
                     onChange={e => setLevelFilter(e.target.value)}
                     aria-label="Filtrer par niveau"
                 >
-                    <option value="all">Tous niveaux</option>
-                    <option value="débutant">Débutant</option>
-                    <option value="intermédiaire">Intermédiaire</option>
-                    <option value="avancé">Avancé</option>
-                    <option value="expert">Expert</option>
+                    <option value="all">{intl.formatMessage({ id: "courses.filter.all_levels" })}</option>
+                    <option value="débutant">{intl.formatMessage({ id: "courses.filter.beginner" })}</option>
+                    <option value="intermédiaire">{intl.formatMessage({ id: "courses.filter.intermediate" })}</option>
+                    <option value="avancé">{intl.formatMessage({ id: "courses.filter.advanced" })}</option>
+                    <option value="expert">{intl.formatMessage({ id: "courses.filter.expert" })}</option>
                 </FilterSelect>
 
                 <FilterSelect
@@ -80,15 +85,15 @@ export default function Courses() {
                     onChange={e => setCategoryFilter(e.target.value)}
                     aria-label="Filtrer par catégorie"
                 >
-                    <option value="all">Toutes catégories</option>
-                    <option value="pentesting">Pentesting</option>
-                    <option value="cryptographie">Cryptographie</option>
-                    <option value="forensic">Forensic</option>
+                    <option value="all">{intl.formatMessage({ id: "courses.filter.all_categories" })}</option>
+                    <option value="pentesting">{intl.formatMessage({ id: "courses.filter.pentesting" })}</option>
+                    <option value="cryptographie">{intl.formatMessage({ id: "courses.filter.cryptography" })}</option>
+                    <option value="forensic">{intl.formatMessage({ id: "courses.filter.forensic" })}</option>
                 </FilterSelect>
 
                 {!isLoading && (
                     <ResultCount>
-                        {filtered.length} cours
+                        {intl.formatMessage({ id: "courses.count" }, { count: filtered.length })}
                     </ResultCount>
                 )}
             </FiltersBar>
@@ -99,13 +104,13 @@ export default function Courses() {
                     Array(6).fill(0).map((_, i) => <SkeletonCard key={i} />)
                 ) : filtered.length > 0 ? (
                     filtered.map((c: any) => (
-                        <CourseCard key={c.id} course={c} />
+                        <CourseCard key={c.id} course={c} isLocked={!canAccess(c.id)} />
                     ))
                 ) : (
                     <EmptyState>
                         <BookOpen />
-                        <strong>Aucun cours trouvé</strong>
-                        <span>Essayez de modifier vos filtres ou votre recherche</span>
+                        <strong>{intl.formatMessage({ id: "courses.empty.title" })}</strong>
+                        <span>{intl.formatMessage({ id: "courses.empty.sub" })}</span>
                     </EmptyState>
                 )}
             </CoursesGrid>

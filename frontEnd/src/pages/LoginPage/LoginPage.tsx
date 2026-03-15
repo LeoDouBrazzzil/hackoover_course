@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useIntl } from "react-intl";
 import * as S from "./LoginPage.styles";
 import {GoogleIcon} from "assets/icon/GoogleIcon.tsx";
 import {EyeIcon} from "assets/icon/EyeIcon.tsx";
@@ -16,6 +17,7 @@ interface FormState {
 
 export default function LoginPage() {
   const navigate = useNavigate();
+  const intl = useIntl();
   const [form, setForm] = useState<FormState>({ email: "", password: "", remember: false });
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -39,7 +41,7 @@ export default function LoginPage() {
         navigate("/dashboard");
       }
     } catch (err: any) {
-      setError(err.response?.data?.message || "Erreur lors de la connexion");
+      setError(err.response?.data?.message || intl.formatMessage({ id: "login.error" }));
       setLoading(false);
     }
   };
@@ -58,8 +60,8 @@ export default function LoginPage() {
           </S.LogoWrap>
 
           {/* ── Heading ── */}
-          <S.Title>Bon retour 👋</S.Title>
-          <S.Subtitle>Connectez-vous pour accéder à votre espace.</S.Subtitle>
+          <S.Title>{intl.formatMessage({ id: "login.title" })}</S.Title>
+          <S.Subtitle>{intl.formatMessage({ id: "login.subtitle" })}</S.Subtitle>
 
           {/* ── Social buttons ── */}
           <S.SocialsGrid>
@@ -70,7 +72,7 @@ export default function LoginPage() {
           {/* ── Divider ── */}
           <S.Divider>
             <S.DividerLine />
-            <S.DividerText>ou</S.DividerText>
+            <S.DividerText>{intl.formatMessage({ id: "common.or" })}</S.DividerText>
             <S.DividerLine />
           </S.Divider>
 
@@ -93,11 +95,11 @@ export default function LoginPage() {
 
             {/* Email or Username */}
             <S.Field>
-              <label htmlFor="email">Adresse e-mail ou nom d'utilisateur</label>
+              <label htmlFor="email">{intl.formatMessage({ id: "login.email_label" })}</label>
               <S.Input
                 id="email"
                 type="text"
-                placeholder="vous@exemple.com ou username"
+                placeholder={intl.formatMessage({ id: "login.email_placeholder" })}
                 value={form.email}
                 onChange={e => setForm(f => ({ ...f, email: e.target.value }))}
                 autoComplete="email"
@@ -107,7 +109,7 @@ export default function LoginPage() {
 
             {/* Mot de passe */}
             <S.Field>
-              <label htmlFor="password">Mot de passe</label>
+              <label htmlFor="password">{intl.formatMessage({ id: "login.password_label" })}</label>
               <S.InputWrap>
                 <S.Input
                   id="password"
@@ -122,7 +124,7 @@ export default function LoginPage() {
                 <S.TogglePasswordButton
                   type="button"
                   onClick={() => setShowPassword(v => !v)}
-                  aria-label={showPassword ? "Masquer" : "Afficher"}
+                  aria-label={showPassword ? intl.formatMessage({ id: "login.hide_password" }) : intl.formatMessage({ id: "login.show_password" })}
                 >
                   <EyeIcon open={showPassword} />
                 </S.TogglePasswordButton>
@@ -137,26 +139,26 @@ export default function LoginPage() {
                   checked={form.remember}
                   onChange={e => setForm(f => ({ ...f, remember: e.target.checked }))}
                 />
-                <span>Se souvenir de moi</span>
+                <span>{intl.formatMessage({ id: "login.remember" })}</span>
               </S.CheckboxWrap>
-              <S.ForgotLink href="#">Mot de passe oublié ?</S.ForgotLink>
+              <S.ForgotLink href="#">{intl.formatMessage({ id: "login.forgot" })}</S.ForgotLink>
             </S.FormRow>
 
             {/* Submit */}
             <S.SubmitButton type="submit" disabled={loading}>
-              {loading ? <S.Spinner /> : "Se connecter"}
+              {loading ? <S.Spinner /> : intl.formatMessage({ id: "login.submit" })}
             </S.SubmitButton>
           </form>
 
           {/* Footer */}
           <S.CardFooter>
-            Pas encore de compte ? <Link to="/register">Créer un compte</Link>
+            {intl.formatMessage({ id: "login.no_account" })} <Link to="/register">{intl.formatMessage({ id: "login.create_account" })}</Link>
           </S.CardFooter>
 
           <S.Terms>
-            En continuant, vous acceptez nos{" "}
-            <a href="#">Conditions d'utilisation</a> et notre{" "}
-            <a href="#">Politique de confidentialité</a>.
+            {intl.formatMessage({ id: "login.terms_prefix" })}{" "}
+            <a href="#">{intl.formatMessage({ id: "login.terms_link" })}</a> {intl.formatMessage({ id: "login.terms_and" })}{" "}
+            <a href="#">{intl.formatMessage({ id: "login.privacy_link" })}</a>.
           </S.Terms>
 
         </S.Card>

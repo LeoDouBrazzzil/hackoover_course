@@ -179,7 +179,8 @@ State = {
 - `/` - Page d'accueil
 - `/courses` - Liste des cours
 - `/course-detail` - Détails d'un cours
-- `/dashboard` - Tableau de bord utilisateur
+- `/dashboard` - Tableau de bord & profil utilisateur
+- `/tarifs` - Page de tarification
 
 ## Conventions de Code
 
@@ -268,6 +269,8 @@ L'application sera accessible sur http://localhost:5173 (Vite dev server)
 
 - **Toujours** utiliser les path aliases lors de l'ajout de nouveaux imports
 - **Préférer** l'édition de fichiers existants à la création de nouveaux fichiers
+- ⚠️ **OBLIGATOIRE — Internationalisation** : Tout fichier frontend créé ou modifié ne doit **jamais** contenir de texte visible en dur. Chaque chaîne de caractères doit être une clé de traduction `react-intl`. Utiliser `intl.formatMessage({ id: "namespace.key" })` dans les composants. Ajouter la clé dans `src/i18n/fr.json` ET `src/i18n/en.json` avant de l'utiliser. Aucune exception pour les textes affichés à l'utilisateur.
+- ⚠️ **OBLIGATOIRE — CSS Variables** : Tout fichier de style frontend créé ou modifié doit utiliser les variables CSS (`var(--bg)`, `var(--text)`, `var(--surface)`, etc.) pour les couleurs afin de supporter le mode clair/sombre. Ne jamais coder en dur des couleurs neutres (`#fff`, `#0a0a0a`, `#f4f4f5`, etc.) — seules les couleurs sémantiques (`#22c55e`, `#ef4444`) peuvent rester en dur.
 - **Éviter** de modifier les fichiers de configuration sans demander confirmation
 - **Respecter** la structure Redux existante (actions, reducers, types séparés)
 - **Utiliser** React Query pour les appels API, Redux pour l'état applicatif
@@ -275,6 +278,22 @@ L'application sera accessible sur http://localhost:5173 (Vite dev server)
 - **Vérifier** la cohérence entre les endpoints backend et les appels frontend
 - Lors de modifications de la base de données, **toujours** créer une migration Liquibase
 - Ne **jamais** commiter de credentials ou secrets dans le code
+
+## Internationalisation (i18n)
+
+- **Librairie**: `react-intl`
+- **Fichiers de traductions**: `frontEnd/src/i18n/fr.json` et `frontEnd/src/i18n/en.json`
+- **Provider**: `I18nProvider` dans `src/i18n/index.tsx`, expose `useLocale()` → `{ locale, setLocale }`
+- **Persistance**: `localStorage` clé `hackoover_locale`
+- **Sélecteur**: `SettingsPanel` (desktop, fixed top-right) + section dans le drawer mobile de la navbar
+
+## Thème (Dark / Light Mode)
+
+- **Provider**: `ColorThemeProvider` dans `src/theme/ThemeContext.tsx`, expose `useColorTheme()` → `{ colorTheme, setColorTheme }`
+- **Mécanisme**: attribut `data-theme="dark"` sur `document.documentElement`
+- **Variables CSS**: définies dans `src/styles/Global.styles.tsx` via `:root` (light) et `[data-theme="dark"]`
+- **Persistance**: `localStorage` clé `hackoover_theme`, respecte `prefers-color-scheme` au premier chargement
+- **Sélecteur**: même `SettingsPanel` / section mobile navbar
 
 ## Technologies Additionnelles
 

@@ -8,5 +8,6 @@
     <include file="db/changelog/0001_create_table_user.xml"/>
     <include file="db/changelog/0002_insert_user.xml"/>
     <include file="db/changelog/0003_create_email_verification_tokens.xml"/>
+    <include file="db/changelog/0004_create_course_purchases.xml"/>
 
 </databaseChangeLog>

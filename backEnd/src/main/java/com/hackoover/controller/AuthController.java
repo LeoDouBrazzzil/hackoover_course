@@ -3,6 +3,7 @@ package com.hackoover.controller;
 import com.hackoover.dto.AuthResponse;
 import com.hackoover.dto.LoginRequest;
 import com.hackoover.dto.RegisterRequest;
+import com.hackoover.dto.UpdateProfileRequest;
 import com.hackoover.dto.UserDTO;
 import com.hackoover.model.User;
 import com.hackoover.repository.UserRepository;
@@ -86,6 +87,50 @@ public class AuthController {
                 .emailVerified(user.getEmailVerified())
                 .isPremium(user.getIsPremium())
                 .roles(user.getRoles())
+                .createdAt(user.getCreatedAt())
+                .build();
+
+        return ResponseEntity.ok(userDTO);
+    }
+
+    @PutMapping("/me")
+    public ResponseEntity<UserDTO> updateProfile(
+            @RequestBody UpdateProfileRequest request,
+            Authentication authentication
+    ) {
+        if (authentication == null || !authentication.isAuthenticated()) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+
+        String email = authentication.getName();
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        if (request.getFirstName() != null) user.setFirstName(request.getFirstName());
+        if (request.getLastName()  != null) user.setLastName(request.getLastName());
+        if (request.getUsername()  != null && !request.getUsername().isBlank()) {
+            // Check uniqueness only if username changed
+            if (!request.getUsername().equals(user.getUsername())) {
+                if (userRepository.existsByUsername(request.getUsername())) {
+                    return ResponseEntity.status(HttpStatus.CONFLICT).build();
+                }
+                user.setUsername(request.getUsername());
+            }
+        }
+
+        User saved = userRepository.save(user);
+
+        UserDTO userDTO = UserDTO.builder()
+                .id(saved.getId())
+                .username(saved.getUsername())
+                .email(saved.getEmail())
+                .firstName(saved.getFirstName())
+                .lastName(saved.getLastName())
+                .avatarUrl(saved.getAvatarUrl())
+                .emailVerified(saved.getEmailVerified())
+                .isPremium(saved.getIsPremium())
+                .roles(saved.getRoles())
+                .createdAt(saved.getCreatedAt())
                 .build();
 
         return ResponseEntity.ok(userDTO);

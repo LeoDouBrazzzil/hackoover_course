@@ -21,7 +21,6 @@ export const Page = styled.div`
   max-width: 1280px;
   margin: 0 auto;
   padding: 48px 24px;
-  font-family: 'Sora', sans-serif;
 `;
 
 export const Header = styled.div`
@@ -37,14 +36,14 @@ export const TitleGroup = styled.div``;
 export const Title = styled.h1`
   font-size: 1.75rem;
   font-weight: 700;
-  color: #0a0a0a;
+  color: var(--text);
   letter-spacing: -0.03em;
   margin: 0 0 4px;
 `;
 
 export const Subtitle = styled.p`
   font-size: 0.875rem;
-  color: #6b7280;
+  color: var(--text-3);
   margin: 0;
 `;
 
@@ -53,11 +52,10 @@ export const NewButton = styled.button`
   align-items: center;
   gap: 8px;
   padding: 10px 20px;
-  background: #0a0a0a;
-  color: #fff;
+  background: var(--accent);
+  color: var(--accent-fg);
   border: none;
   border-radius: 10px;
-  font-family: 'Sora', sans-serif;
   font-size: 0.875rem;
   font-weight: 600;
   cursor: pointer;
@@ -65,7 +63,7 @@ export const NewButton = styled.button`
   white-space: nowrap;
 
   &:hover {
-    background: #1a1a1a;
+    background: color-mix(in srgb, var(--accent) 85%, transparent);
     transform: translateY(-1px);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   }
@@ -106,7 +104,7 @@ export const LoadingGrid = styled(Grid)``;
 export const SkeletonCard = styled.div`
   height: 320px;
   border-radius: 14px;
-  background: linear-gradient(90deg, #f0f0f0 25%, #e8e8e8 37%, #f0f0f0 63%);
+  background: linear-gradient(90deg, var(--bg-3) 25%, var(--bg-2) 37%, var(--bg-3) 63%);
   background-size: 800px 100%;
   animation: ${shimmer} 1.4s infinite linear;
 `;
@@ -118,7 +116,7 @@ export const EmptyState = styled.div`
   align-items: center;
   gap: 10px;
   padding: 80px 24px;
-  color: #9ca3af;
+  color: var(--text-4);
   text-align: center;
 
   p { font-size: 0.875rem; margin: 0; }
@@ -127,8 +125,8 @@ export const EmptyState = styled.div`
 // ── Course Card ───────────────────────────────────────────────────────────────
 
 export const CardWrapper = styled.div`
-  background: #fff;
-  border: 1px solid rgba(0, 0, 0, 0.07);
+  background: var(--surface);
+  border: 1px solid var(--border);
   border-radius: 14px;
   overflow: hidden;
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
@@ -197,7 +195,7 @@ export const Badge = styled.span<{ $variant?: string }>`
       case 'ADVANCED':     return 'background:#fff7ed; color:#c2410c;';
       case 'EXPERT':       return 'background:#fef2f2; color:#b91c1c;';
       case 'featured':     return 'background:#faf5ff; color:#7c3aed;';
-      default:             return 'background:#f4f4f5; color:#71717a;';
+      default:             return 'background:var(--bg-3); color:var(--text-3);';
     }
   }}
 `;
@@ -205,7 +203,7 @@ export const Badge = styled.span<{ $variant?: string }>`
 export const CardTitle = styled.h3`
   font-size: 1rem;
   font-weight: 700;
-  color: #0a0a0a;
+  color: var(--text);
   margin: 0 0 6px;
   letter-spacing: -0.02em;
   display: -webkit-box;
@@ -216,7 +214,7 @@ export const CardTitle = styled.h3`
 
 export const CardDesc = styled.p`
   font-size: 0.8125rem;
-  color: #6b7280;
+  color: var(--text-3);
   margin: 0;
   display: -webkit-box;
   -webkit-line-clamp: 2;
@@ -229,8 +227,8 @@ export const CardActions = styled.div`
   display: flex;
   gap: 6px;
   padding: 12px 18px;
-  border-top: 1px solid rgba(0, 0, 0, 0.06);
-  background: #fafafa;
+  border-top: 1px solid var(--border);
+  background: var(--bg-2);
 `;
 
 export const ActionBtn = styled.button<{ $danger?: boolean; $primary?: boolean }>`
@@ -239,7 +237,6 @@ export const ActionBtn = styled.button<{ $danger?: boolean; $primary?: boolean }
   gap: 5px;
   padding: 6px 11px;
   border-radius: 8px;
-  font-family: 'Sora', sans-serif;
   font-size: 0.75rem;
   font-weight: 600;
   cursor: pointer;
@@ -247,9 +244,9 @@ export const ActionBtn = styled.button<{ $danger?: boolean; $primary?: boolean }
   border: 1px solid;
 
   ${({ $danger, $primary }) => {
-    if ($danger)  return 'background:#fff; border-color:rgba(239,68,68,0.2); color:#ef4444; &:hover{background:#fef2f2; border-color:#ef4444;}';
-    if ($primary) return 'background:#0a0a0a; border-color:#0a0a0a; color:#fff; &:hover{background:#1a1a1a;}';
-    return 'background:#fff; border-color:rgba(0,0,0,0.1); color:#374151; &:hover{background:#f9fafb; border-color:rgba(0,0,0,0.2);}';
+    if ($danger)  return 'background:var(--surface); border-color:rgba(239,68,68,0.2); color:#ef4444; &:hover{background:#fef2f2; border-color:#ef4444;}';
+    if ($primary) return 'background:var(--accent); border-color:var(--accent); color:var(--accent-fg); &:hover{background:color-mix(in srgb, var(--accent) 85%, transparent);}';
+    return 'background:var(--surface); border-color:var(--border-2); color:var(--text-2); &:hover{background:var(--bg-2); border-color:rgba(0,0,0,0.2);}';
   }}
 `;
 
@@ -269,7 +266,7 @@ export const Overlay = styled.div`
 `;
 
 export const ConfirmModal = styled.div`
-  background: #fff;
+  background: var(--surface);
   border-radius: 16px;
   padding: 28px;
   width: 100%;
@@ -281,14 +278,14 @@ export const ConfirmModal = styled.div`
 export const ConfirmTitle = styled.h3`
   font-size: 1.1rem;
   font-weight: 700;
-  color: #0a0a0a;
+  color: var(--text);
   margin: 0 0 8px;
   letter-spacing: -0.02em;
 `;
 
 export const ConfirmText = styled.p`
   font-size: 0.875rem;
-  color: #6b7280;
+  color: var(--text-3);
   margin: 0 0 24px;
   line-height: 1.6;
 `;
@@ -302,15 +299,14 @@ export const ConfirmActions = styled.div`
 export const CancelBtn = styled.button`
   padding: 9px 18px;
   border-radius: 9px;
-  border: 1px solid rgba(0, 0, 0, 0.1);
-  background: #fff;
-  font-family: 'Sora', sans-serif;
+  border: 1px solid var(--border-2);
+  background: var(--surface);
   font-size: 0.875rem;
   font-weight: 600;
-  color: #374151;
+  color: var(--text-2);
   cursor: pointer;
   transition: all 0.2s;
-  &:hover { background: #f9fafb; }
+  &:hover { background: var(--bg-2); }
 `;
 
 export const DangerBtn = styled.button`
@@ -318,7 +314,6 @@ export const DangerBtn = styled.button`
   border-radius: 9px;
   border: none;
   background: #ef4444;
-  font-family: 'Sora', sans-serif;
   font-size: 0.875rem;
   font-weight: 600;
   color: #fff;

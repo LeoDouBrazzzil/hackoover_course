@@ -1,10 +1,12 @@
-import { Link } from "react-router-dom";
-import { Clock, ArrowRight, BookOpen } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import { Clock, ArrowRight, BookOpen, Lock } from "lucide-react";
+import { useIntl } from "react-intl";
 
 import {
     CardWrapper,
     CardImage,
     CardImagePlaceholder,
+    CardLockOverlay,
     CardBody,
     CardMeta,
     CardCategory,
@@ -16,59 +18,84 @@ import {
     CardCTA,
 } from "components/courses/CourseCard/CourseCard.styles.tsx";
 
-export default function CourseCard({ course }: { course: any }) {
+interface Props {
+    course: any;
+    isLocked?: boolean;
+}
+
+export default function CourseCard({ course, isLocked = false }: Props) {
+    const navigate = useNavigate();
+    const intl = useIntl();
+
+    const handleClick = () => {
+        if (isLocked) {
+            navigate("/tarifs");
+        } else {
+            navigate(`/course-detail?id=${course.id}`);
+        }
+    };
+
     return (
-        <Link to={`/course-detail?id=${course.id}`} style={{ textDecoration: "none", display: "flex", height: "100%" }}>
-            <CardWrapper>
+        <CardWrapper onClick={handleClick} $locked={isLocked}>
 
-                {/* ── Image ── */}
-                <CardImage>
-                    {course.image_url ? (
-                        <img src={course.image_url} alt={course.title} />
-                    ) : (
-                        <CardImagePlaceholder>
-                            <BookOpen />
-                        </CardImagePlaceholder>
+            {/* ── Image ── */}
+            <CardImage>
+                {course.image_url ? (
+                    <img src={course.image_url} alt={course.title} />
+                ) : (
+                    <CardImagePlaceholder>
+                        <BookOpen />
+                    </CardImagePlaceholder>
+                )}
+                {isLocked && (
+                    <CardLockOverlay>
+                        <Lock />
+                    </CardLockOverlay>
+                )}
+            </CardImage>
+
+            {/* ── Body ── */}
+            <CardBody>
+                <CardMeta>
+                    <CardCategory>
+                        {(course.category ?? "").replace(/_/g, " ")}
+                    </CardCategory>
+                    {course.level && (
+                        <LevelBadge $level={course.level}>
+                            {course.level}
+                        </LevelBadge>
                     )}
-                </CardImage>
+                </CardMeta>
 
-                {/* ── Body ── */}
-                <CardBody>
-                    <CardMeta>
-                        <CardCategory>
-                            {(course.category ?? "").replace(/_/g, " ")}
-                        </CardCategory>
-                        {course.level && (
-                            <LevelBadge $level={course.level}>
-                                {course.level}
-                            </LevelBadge>
-                        )}
-                    </CardMeta>
+                <CardTitle>{course.title}</CardTitle>
 
-                    <CardTitle>{course.title}</CardTitle>
+                {course.description && (
+                    <CardDescription>{course.description}</CardDescription>
+                )}
 
-                    {course.description && (
-                        <CardDescription>{course.description}</CardDescription>
-                    )}
+                {/* ── Footer ── */}
+                <CardFooter>
+                    <CardDuration>
+                        {course.duration_hours ? (
+                            <>
+                                <Clock />
+                                {course.duration_hours}h
+                            </>
+                        ) : null}
+                    </CardDuration>
 
-                    {/* ── Footer ── */}
-                    <CardFooter>
-                        <CardDuration>
-                            {course.duration_hours ? (
-                                <>
-                                    <Clock />
-                                    {course.duration_hours}h
-                                </>
-                            ) : null}
-                        </CardDuration>
-
-                        <CardCTA>
-                            Commencer <ArrowRight />
+                    {isLocked ? (
+                        <CardCTA $locked>
+                            <Lock size={13} /> {intl.formatMessage({ id: "course_card.price" })}
                         </CardCTA>
-                    </CardFooter>
-                </CardBody>
+                    ) : (
+                        <CardCTA>
+                            {intl.formatMessage({ id: "course_card.start" })} <ArrowRight size={14} />
+                        </CardCTA>
+                    )}
+                </CardFooter>
+            </CardBody>
 
-            </CardWrapper>
-        </Link>
+        </CardWrapper>
     );
 }

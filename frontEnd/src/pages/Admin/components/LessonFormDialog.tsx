@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { X } from 'lucide-react';
+import { useIntl } from 'react-intl';
 import api, { type LessonRequest, type LessonResponse } from 'api/api.ts';
 import { TipTapEditor } from 'components/editor/TipTapEditor.tsx';
 import * as S from './LessonFormDialog.styles';
@@ -13,6 +14,7 @@ interface LessonFormDialogProps {
 }
 
 export const LessonFormDialog = ({ open, courseId, lesson, nextOrderIndex, onClose }: LessonFormDialogProps) => {
+  const intl = useIntl();
   const [formData, setFormData] = useState<LessonRequest>({
     courseId,
     title: '',
@@ -54,7 +56,7 @@ export const LessonFormDialog = ({ open, courseId, lesson, nextOrderIndex, onClo
       }
       onClose(true);
     } catch (err: any) {
-      setError(err.response?.data?.message || 'Erreur lors de la sauvegarde');
+      setError(err.response?.data?.message || intl.formatMessage({ id: 'admin.lesson_form.error' }));
     } finally {
       setLoading(false);
     }
@@ -66,7 +68,7 @@ export const LessonFormDialog = ({ open, courseId, lesson, nextOrderIndex, onClo
     <S.Overlay onClick={() => onClose(false)}>
       <S.Modal onClick={e => e.stopPropagation()}>
         <S.ModalHeader>
-          <S.ModalTitle>{lesson ? 'Modifier la leçon' : 'Nouvelle leçon'}</S.ModalTitle>
+          <S.ModalTitle>{lesson ? intl.formatMessage({ id: 'admin.lesson_form.title_edit' }) : intl.formatMessage({ id: 'admin.lesson_form.title_new' })}</S.ModalTitle>
           <S.CloseBtn onClick={() => onClose(false)}><X size={18} /></S.CloseBtn>
         </S.ModalHeader>
 
@@ -74,17 +76,17 @@ export const LessonFormDialog = ({ open, courseId, lesson, nextOrderIndex, onClo
           {error && <S.ErrorMsg>{error}</S.ErrorMsg>}
 
           <S.Field>
-            <S.Label>Titre *</S.Label>
+            <S.Label>{intl.formatMessage({ id: 'admin.lesson_form.field.title' })}</S.Label>
             <S.Input
               value={formData.title}
               onChange={e => setFormData(p => ({ ...p, title: e.target.value }))}
-              placeholder="Titre de la leçon"
+              placeholder={intl.formatMessage({ id: 'admin.lesson_form.field.title_placeholder' })}
             />
           </S.Field>
 
           <S.Row>
             <S.Field>
-              <S.Label>Durée (minutes)</S.Label>
+              <S.Label>{intl.formatMessage({ id: 'admin.lesson_form.field.duration' })}</S.Label>
               <S.Input
                 type="number"
                 value={formData.duration || ''}
@@ -93,7 +95,7 @@ export const LessonFormDialog = ({ open, courseId, lesson, nextOrderIndex, onClo
               />
             </S.Field>
             <S.Field>
-              <S.Label>URL vidéo (optionnel)</S.Label>
+              <S.Label>{intl.formatMessage({ id: 'admin.lesson_form.field.video' })}</S.Label>
               <S.Input
                 value={formData.videoUrl}
                 onChange={e => setFormData(p => ({ ...p, videoUrl: e.target.value }))}
@@ -103,14 +105,14 @@ export const LessonFormDialog = ({ open, courseId, lesson, nextOrderIndex, onClo
           </S.Row>
 
           <S.Field>
-            <S.Label>Contenu *</S.Label>
+            <S.Label>{intl.formatMessage({ id: 'admin.lesson_form.field.content' })}</S.Label>
             <S.TabsWrapper>
               <S.TabBar>
                 <S.TabBtn $active={activeTab === 'edit'} onClick={() => setActiveTab('edit')}>
-                  Éditer
+                  {intl.formatMessage({ id: 'admin.lesson_form.tab.edit' })}
                 </S.TabBtn>
                 <S.TabBtn $active={activeTab === 'preview'} onClick={() => setActiveTab('preview')}>
-                  Aperçu
+                  {intl.formatMessage({ id: 'admin.lesson_form.tab.preview' })}
                 </S.TabBtn>
               </S.TabBar>
               <S.TabContent>
@@ -133,12 +135,12 @@ export const LessonFormDialog = ({ open, courseId, lesson, nextOrderIndex, onClo
         </S.ModalBody>
 
         <S.ModalFooter>
-          <S.CancelBtn onClick={() => onClose(false)} disabled={loading}>Annuler</S.CancelBtn>
+          <S.CancelBtn onClick={() => onClose(false)} disabled={loading}>{intl.formatMessage({ id: 'admin.lesson_form.cancel' })}</S.CancelBtn>
           <S.SaveBtn
             onClick={handleSubmit}
             disabled={loading || !formData.title || !formData.content}
           >
-            {loading ? 'Sauvegarde...' : 'Sauvegarder'}
+            {loading ? intl.formatMessage({ id: 'admin.lesson_form.saving' }) : intl.formatMessage({ id: 'admin.lesson_form.save' })}
           </S.SaveBtn>
         </S.ModalFooter>
       </S.Modal>

@@ -204,6 +204,11 @@ const api = {
             return data;
         },
 
+        async updateProfile(payload: { firstName?: string; lastName?: string; username?: string }) {
+            const { data } = await ws.put("/auth/me", payload);
+            return data;
+        },
+
         redirectToLogin() {
             window.location.href = "/login";
         },
@@ -363,6 +368,23 @@ const api = {
                     params: { courseId }
                 });
             },
+        },
+    },
+    // ------------------------------------
+    // ACCESS & PAYMENTS
+    // ------------------------------------
+    access: {
+        async getStatus(): Promise<{ hasActiveSubscription: boolean; purchasedCourseIds: string[] }> {
+            const { data } = await ws.get('/access/status');
+            return data;
+        },
+
+        async subscribe(): Promise<void> {
+            await ws.post('/access/subscribe');
+        },
+
+        async purchaseCourse(courseId: string): Promise<void> {
+            await ws.post(`/access/purchase/${courseId}`);
         },
     },
 };

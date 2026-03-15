@@ -22,9 +22,16 @@ export const useAuth = () => {
     }
 
     try {
-      // Decode JWT token (simple base64 decode)
       const payload = token.split('.')[1];
       const decoded: DecodedToken = JSON.parse(atob(payload));
+
+      if (decoded.exp && decoded.exp < Math.floor(Date.now() / 1000)) {
+        localStorage.removeItem('token');
+        setIsAuthenticated(false);
+        setIsAdmin(false);
+        setLoading(false);
+        return;
+      }
 
       setIsAuthenticated(true);
       setIsAdmin(decoded.roles?.includes('ROLE_ADMIN') || decoded.roles?.includes('ADMIN') || false);

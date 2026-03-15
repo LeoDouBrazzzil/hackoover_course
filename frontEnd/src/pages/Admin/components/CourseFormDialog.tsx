@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { X, Upload } from 'lucide-react';
+import { useIntl } from 'react-intl';
 import api, { type CourseRequest, type CourseResponse } from 'api/api.ts';
 import * as S from './CourseFormDialog.styles';
 
@@ -10,6 +11,7 @@ interface CourseFormDialogProps {
 }
 
 export const CourseFormDialog = ({ open, course, onClose }: CourseFormDialogProps) => {
+  const intl = useIntl();
   const [formData, setFormData] = useState<CourseRequest>({
     title: '',
     description: '',
@@ -65,7 +67,7 @@ export const CourseFormDialog = ({ open, course, onClose }: CourseFormDialogProp
       if (imageFile) await api.admin.courses.uploadImage(savedCourse.id, imageFile);
       onClose(true);
     } catch (err: any) {
-      setError(err.response?.data?.message || 'Erreur lors de la sauvegarde');
+      setError(err.response?.data?.message || intl.formatMessage({ id: 'admin.error.save' }));
     } finally {
       setLoading(false);
     }
@@ -77,7 +79,7 @@ export const CourseFormDialog = ({ open, course, onClose }: CourseFormDialogProp
     <S.Overlay onClick={() => onClose(false)}>
       <S.Modal onClick={e => e.stopPropagation()}>
         <S.ModalHeader>
-          <S.ModalTitle>{course ? 'Modifier le cours' : 'Nouveau cours'}</S.ModalTitle>
+          <S.ModalTitle>{course ? intl.formatMessage({ id: 'admin.course_form.title_edit' }) : intl.formatMessage({ id: 'admin.course_form.title_new' })}</S.ModalTitle>
           <S.CloseBtn onClick={() => onClose(false)}><X size={18} /></S.CloseBtn>
         </S.ModalHeader>
 
@@ -85,48 +87,48 @@ export const CourseFormDialog = ({ open, course, onClose }: CourseFormDialogProp
           {error && <S.ErrorMsg>{error}</S.ErrorMsg>}
 
           <S.Field>
-            <S.Label>Titre *</S.Label>
+            <S.Label>{intl.formatMessage({ id: 'admin.course_form.field.title' })}</S.Label>
             <S.Input
               value={formData.title}
               onChange={e => setFormData(p => ({ ...p, title: e.target.value }))}
-              placeholder="Titre du cours"
+              placeholder={intl.formatMessage({ id: 'admin.course_form.field.title_placeholder' })}
             />
           </S.Field>
 
           <S.Field>
-            <S.Label>Description *</S.Label>
+            <S.Label>{intl.formatMessage({ id: 'admin.course_form.field.description' })}</S.Label>
             <S.Textarea
               value={formData.description}
               onChange={e => setFormData(p => ({ ...p, description: e.target.value }))}
-              placeholder="Décrivez le cours..."
+              placeholder={intl.formatMessage({ id: 'admin.course_form.field.description_placeholder' })}
             />
           </S.Field>
 
           <S.Row>
             <S.Field>
-              <S.Label>Difficulté</S.Label>
+              <S.Label>{intl.formatMessage({ id: 'admin.course_form.field.difficulty' })}</S.Label>
               <S.Select
                 value={formData.difficulty}
                 onChange={e => setFormData(p => ({ ...p, difficulty: e.target.value }))}
               >
-                <option value="BEGINNER">Débutant</option>
-                <option value="INTERMEDIATE">Intermédiaire</option>
-                <option value="ADVANCED">Avancé</option>
-                <option value="EXPERT">Expert</option>
+                <option value="BEGINNER">{intl.formatMessage({ id: 'admin.course_form.difficulty.beginner' })}</option>
+                <option value="INTERMEDIATE">{intl.formatMessage({ id: 'admin.course_form.difficulty.intermediate' })}</option>
+                <option value="ADVANCED">{intl.formatMessage({ id: 'admin.course_form.difficulty.advanced' })}</option>
+                <option value="EXPERT">{intl.formatMessage({ id: 'admin.course_form.difficulty.expert' })}</option>
               </S.Select>
             </S.Field>
             <S.Field>
-              <S.Label>Catégorie</S.Label>
+              <S.Label>{intl.formatMessage({ id: 'admin.course_form.field.category' })}</S.Label>
               <S.Input
                 value={formData.category}
                 onChange={e => setFormData(p => ({ ...p, category: e.target.value }))}
-                placeholder="Ex: Web Security"
+                placeholder={intl.formatMessage({ id: 'admin.course_form.field.category_placeholder' })}
               />
             </S.Field>
           </S.Row>
 
           <S.Field>
-            <S.Label>Durée (minutes)</S.Label>
+            <S.Label>{intl.formatMessage({ id: 'admin.course_form.field.duration' })}</S.Label>
             <S.Input
               type="number"
               value={formData.duration || ''}
@@ -136,7 +138,7 @@ export const CourseFormDialog = ({ open, course, onClose }: CourseFormDialogProp
           </S.Field>
 
           <S.ToggleRow>
-            <S.ToggleLabel>Cours en vedette</S.ToggleLabel>
+            <S.ToggleLabel>{intl.formatMessage({ id: 'admin.course_form.field.featured' })}</S.ToggleLabel>
             <S.ToggleSwitch>
               <input
                 type="checkbox"
@@ -148,23 +150,23 @@ export const CourseFormDialog = ({ open, course, onClose }: CourseFormDialogProp
           </S.ToggleRow>
 
           <S.Field>
-            <S.Label>Image</S.Label>
+            <S.Label>{intl.formatMessage({ id: 'admin.course_form.field.image' })}</S.Label>
             <S.ImageUploadArea>
               <Upload size={15} />
-              {imageFile ? imageFile.name : 'Cliquer pour uploader une image'}
+              {imageFile ? imageFile.name : intl.formatMessage({ id: 'admin.course_form.image_upload' })}
               <input type="file" accept="image/*" onChange={handleImageChange} />
             </S.ImageUploadArea>
-            {imagePreview && <S.ImagePreview src={imagePreview} alt="Aperçu" />}
+            {imagePreview && <S.ImagePreview src={imagePreview} alt={intl.formatMessage({ id: 'admin.course_form.image_preview_alt' })} />}
           </S.Field>
         </S.ModalBody>
 
         <S.ModalFooter>
-          <S.CancelBtn onClick={() => onClose(false)} disabled={loading}>Annuler</S.CancelBtn>
+          <S.CancelBtn onClick={() => onClose(false)} disabled={loading}>{intl.formatMessage({ id: 'admin.course_form.cancel' })}</S.CancelBtn>
           <S.SaveBtn
             onClick={handleSubmit}
             disabled={loading || !formData.title || !formData.description}
           >
-            {loading ? 'Sauvegarde...' : 'Sauvegarder'}
+            {loading ? intl.formatMessage({ id: 'admin.course_form.saving' }) : intl.formatMessage({ id: 'admin.course_form.save' })}
           </S.SaveBtn>
         </S.ModalFooter>
       </S.Modal>

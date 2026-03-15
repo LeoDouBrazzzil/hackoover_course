@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
 import java.util.Set;
 import java.util.UUID;
 
@@ -22,4 +23,5 @@ public class UserDTO {
     private Boolean emailVerified;
     private Boolean isPremium;
     private Set<String> roles;
+    private LocalDateTime createdAt;
 }
